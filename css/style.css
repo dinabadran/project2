@@ -1,0 +1,1988 @@
+/* -------------------- Start Global Rules -------------------- */
+
+/*  ضمن القياس padding بحيث يشمل الحواف و ال   box-sizing  جعل جميع العناصر تستخدم نظام الـ */
+* {
+  -webkit-box-sizing: border-box; /* 🔹 -webkit- → خاصة بمحرك عرض متصفحات مثل Google Chrome و Safari.*/
+  -moz-box-sizing: border-box;    /* خاصة بمحرك عرض Mozilla Firefox.*/
+  box-sizing: border-box;         /* الوضع القياسى أي عرض أو ارتفاع تحطه للعنصر يشمل المحتوى + البادينج + البوردر، وما يزيدش عن المقاس اللي حددته */
+}
+/* تعريف متغيرات الألوان والقيم الأساسية لاستخدامها في التصميم */
+:root {
+  --main-color: #ff6f61;          /* اللون الرئيسي الجديد (أحمر / داكن) */
+  --main-color-alt: #ff4b3e;      /* اللون البديل الجديد (أفتح شويه من الرئيسي) */
+  --main-transition: 0.3s;        /* مدة الانتقال للحركات */
+  --main-padding-top: 100px;      /* مسافة علوية للأقسام */
+  --main-padding-bottom: 100px;   /* مسافة سفلية للأقسام */
+  --section-background: #1a1a1a; /* لون خلفية القسم الجديد داكن عشان يتناسق*/
+}
+
+/* جعل التمرير في الصفحة سلس */
+html {
+  scroll-behavior: smooth;
+}
+
+/* الخط الافتراضي للصفحة */
+body {
+  font-family: "Cairo", sans-serif;
+}
+
+/* إزالة الخط تحت الروابط */
+a {
+  text-decoration: none;
+}
+
+/* إزالة النقاط والمسافات الافتراضية من القوائم */
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* تنسيق الحاوية الأساسية */
+.container {
+  padding-left: 15px;   /* مسافة داخلية من اليسار */
+  padding-right: 15px;  /* مسافة داخلية من اليمين */
+  margin-left: auto;    /* توسيط الحاوية أفقيًا */
+  margin-right: auto;
+}
+
+/* عرض الحاوية على الشاشات الصغيرة */
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+
+/* عرض الحاوية على الشاشات المتوسطة */
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+
+/* عرض الحاوية على الشاشات الكبيرة */
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+/* ===============================
+العنصر الرئيسي للنص المشترك في كل سكشن 
+   =============================== */
+.main-title {
+  text-transform: uppercase; /* تحويل النص لأحرف كبيرة */
+  margin: 0 auto 80px;       /* تباعد خارجي: فوق 0، أيسر وأيمن تلقائي، تحت 80 */
+  padding: 12px 25px;        /* حشوة داخلية لتوازن الشكل */
+  font-size: 32px;           /* حجم الخط */
+  width: fit-content;        /* العرض بحسب المحتوى */
+  position: relative;        /* لجعل ::before و ::after موضوعة بالنسبة له */
+  z-index: 3;                /* رفع مستوى العنصر */
+  color: #fff;               /* لون النص */
+  background: linear-gradient(90deg, #ff4e50, #f9d423); /* خلفية متدرجة جذابة */
+  border-radius: 50px;       /* زوايا دائرية */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3); /* ظل خارجي لإبراز العنوان */
+  transition: all 0.3s ease; /* انتقال ناعم للتأثيرات */
+  overflow: visible;         /* السماح للعناصر الخارجة من الإطار بالظهور */
+}
+
+/* ===============================
+   تأثير عند المرور بالماوس
+   =============================== */
+.main-title:hover {
+  transform: scale(1.1);                   /* تكبير العنوان قليلاً */
+  box-shadow: 0 12px 25px rgba(0,0,0,0.4); /* زيادة الظل عند المرور */
+  color: var(--section-background);        /* تغيير لون النص */
+  background-color: var(--main-color);     /* تغيير الخلفية */
+  border: 2px solid var(--main-color);     /* إضافة إطار */
+}
+
+/* ===============================
+   الدوائر الجانبية ::before و ::after
+   =============================== */
+.main-title::before,
+.main-title::after {
+  content: "";                    /* عنصر وهمي بدون نص */
+  position: absolute;             /* وضعية مطلقة */
+  width: 12px;                    /* عرض الدائرة */
+  height: 12px;                   /* ارتفاع الدائرة */
+  border-radius: 50%;             /* شكل دائري */
+  background-color: var(--main-color); /* لون الدائرة */
+  top: 50%;                       /* تمركز عمودي */
+ transform: translateY(-50%); /* يحرك العنصر نصف ارتفاعه للأعلى، فيتوسط العنصر تمامًا. */
+  transition: left 0.5s ease, right 0.5s ease, transform 0.5s ease, opacity/*الشفافيه*/ 0.5s ease; /* حركة سلسة */
+  z-index: 1;                     /* وضع الدائرة تحت النص */
+  opacity: 1;                     /* الدائرة ظاهرة */
+}
+/* transform  اللى بتعمل تاثير الحركه*/
+/* موضع الدائرة اليسرى واليمنى */
+.main-title::before { left: -20px; }
+.main-title::after { right: -20px; }
+
+/* ===============================
+   تأثير تحريك وتكبير الدوائر عند المرور
+   =============================== */
+.main-title:hover::before {
+  left: 50%; /* تحريك الدائرة للمنتصف */
+  transform: translateX(-100%) translateY(-50%) scale(1.5); /* تعديل التمركز وتكبير */
+  opacity: 0; /* إخفاء تدريجي */
+}
+
+.main-title:hover::after {
+  right: 50%; /* تحريك الدائرة للمنتصف */
+  transform: translateX(100%) translateY(-50%) scale(1.5); /* تعديل التمركز وتكبير */
+  opacity: 0; /* إخفاء تدريجي */
+}
+
+
+/* -------------------- End Global Rules -------------------- */
+
+
+/* position: relative معناها إن العنصر بيبقى في مكانه الطبيعي، لكن تقدر تحركه شويه يمين أو شمال أو فوق أو تحت لو حبيت 
+هيتحدد مكانه بالنسبة له  position: absolute  وكمان أي عنصر جواه واخد 
+  يعني كأنك بتقول: "خليك في مكانك، بس انت المرجع لأي حاجة جواك".
+*/
+
+/* ======================================================== */
+/* ------------------- Start Header ------------------- */
+/* ========================================================== */
+/* تنسيق عام لعنصر الهيدر */
+/* ==========================
+   الهيدر العام
+========================== */
+.header {
+/* position: fixed;*/         /* إذا أردت تثبيت الهيدر أثناء التمرير */
+  top: 0;                       /* وضع الهيدر أعلى الصفحة */
+  left: 0;                      /* يلتصق بالجانب الأيسر */
+  width: 100%;                  /* يغطي عرض الشاشة بالكامل */
+  z-index: 1000;                /* للتأكد من ظهوره فوق باقي العناصر */
+  background-color: #1a1a1a;   /* خلفية الهيدر */
+  
+  /* ظل خفيف حول الهيدر */
+  -webkit-box-shadow: 0 0 10px #ddd;
+  -moz-box-shadow: 0 0 10px #ddd;
+  box-shadow: 0 0 10px #ddd;
+}
+
+/* ==========================
+   الحاوية داخل الهيدر
+========================== */
+.header .container {
+  display: flex;                     /* ترتيب العناصر أفقيًا */
+  justify-content: space-between;    /* توزيع العناصر على الطرفين */
+  align-items: center;               /* محاذاة عمودية للمنتصف */
+  flex-wrap: wrap;                   /* السماح للعناصر بالنزول عند صغر الشاشة */
+  position: relative;                /* لتحديد موضع عناصر مثل Mega Menu */
+}
+
+/* ==========================
+   شعار الموقع
+========================== */
+.header .logo {
+  color: #ff4b3e;            /* لون جذاب */
+  font-size: 28px;            /* حجم الخط */
+  font-weight: 900;           /* خط سميك جدًا */
+  letter-spacing: 1px;        /* مسافة بين الحروف */
+  height: 72px;               /* ارتفاع الشعار */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* تعديل الشعار للشاشات الصغيرة */
+@media (max-width: 767px) {
+  .header .logo {
+    width: 100%;              /* الشعار يأخذ كامل عرض الشاشة */
+    height: 50px;             /* تقليل الارتفاع */
+  }
+}
+
+/* ==========================
+   القائمة الرئيسية
+========================== */
+.header .main-nav {
+  display: flex;               /* عرض العناصر أفقياً */
+}
+
+/* تعديل القائمة للشاشات الصغيرة */
+@media (max-width: 767px) {
+  .header .main-nav {
+    margin: auto;             /* جعل القائمة في المنتصف */
+  }
+}
+
+/* عند التمرير على عنصر من القائمة لإظهار Mega Menu */
+.header .main-nav > li:hover .mega-menu {
+  opacity: 1;
+  z-index: 100;
+  top: calc(100% + 1px);
+}
+
+/* روابط القائمة الرئيسية */
+.header .main-nav > li > a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 72px;
+  position: relative;
+  color: var(--main-color);
+  padding: 0 30px;
+  overflow: hidden;
+  font-size: 18px;
+  transition: var(--main-transition);
+}
+
+/* تعديل الروابط للشاشات الصغيرة */
+@media (max-width: 767px) {
+  .header .main-nav > li > a {
+    padding: 10px;
+    font-size: 14px;
+    height: 40px;
+  }
+}
+
+/* شريط ملون أعلى الرابط عند التمرير */
+.header .main-nav > li > a::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background-color: var(--main-color);
+  top: 0;
+  left: -100%; /* مخفي في البداية */
+  transition: var(--main-transition);
+}
+
+/* تأثير تمرير الماوس على الرابط */
+.header .main-nav > li > a:hover {
+  color: var(--main-color);
+  background-color: #fafafa;
+}
+
+.header .main-nav > li > a:hover::before {
+  left: 0; /* إظهار الشريط */
+}
+
+/* ==========================
+   Mega Menu
+========================== */
+.header .mega-menu {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  padding: 30px;
+  background-color: white;
+  border-bottom: 3px solid var(--main-color);
+  z-index: -1;             /* مخفي خلف العناصر */
+  display: flex;
+  gap: 40px;
+  top: calc(100% + 50px);
+  opacity: 0;              /* مخفي */
+  transition: top var(--main-transition), opacity var(--main-transition);
+}
+
+/* تعديل Mega Menu للشاشات الصغيرة */
+@media (max-width: 767px) {
+  .header .mega-menu {
+    flex-direction: column;
+    gap: 0;
+    padding: 5px;
+  }
+}
+
+/* صورة داخل القائمة الكبيرة */
+.header .mega-menu .image img {
+  max-width: 100%;
+}
+
+/* إخفاء الصورة للشاشات المتوسطة والصغيرة */
+@media (max-width: 991px) {
+  .header .mega-menu .image {
+    display: none;
+  }
+}
+
+/* روابط Mega Menu */
+.header .mega-menu .links {
+  min-width: 250px;
+  flex: 1;
+}
+
+/* كل عنصر في القائمة الكبيرة */
+.header .mega-menu .links li {
+  position: relative;
+}
+
+/* خط فاصل بين العناصر */
+.header .mega-menu .links li:not(:last-child) {
+  border-bottom: 1px solid #e9e6e6;
+}
+
+/* إضافة خط للعنصر الأخير للشاشات الصغيرة */
+@media (max-width: 767px) {
+  .header .mega-menu .links:first-of-type li:last-child {
+    border-bottom: 1px solid #e9e6e6;
+  }
+}
+
+/* خلفية عند التمرير على العنصر */
+.header .mega-menu .links li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background-color: #fafafa;
+  z-index: -1;
+  transition: var(--main-transition);
+}
+
+.header .mega-menu .links li:hover::before {
+  width: 100%;
+}
+
+/* روابط داخل Mega Menu */
+.header .mega-menu .links li a {
+  color: var(--main-color);
+  padding: 15px;
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* أيقونة بجانب النص */
+.header .mega-menu .links li a i {
+  margin-right: 10px;
+}
+
+
+/* ------------------- End Header ------------------- */
+
+/* ===== Start Landing Section (القسم الرئيسي في الصفحة) ===== */
+ /* =========================
+       قسم الهبوط الرئيسي
+    ========================= */
+    .landing {
+      position: relative; /* لتكون أي عناصر absolute داخله مرتبطة به */
+    }
+
+    /* =========================
+       خلفية مزخرفة مائلة
+    ========================= */
+    .landing::before {
+      content: ""; /* عنصر وهمي */
+      position: absolute; 
+      left: 0;
+      top: -40px; /* رفع الخلفية قليلاً */
+      width: 100%;
+      height: 100%;
+      background-color: #ececec; /* لون الخلفية */
+      z-index: -1; /* خلف المحتوى */
+      transform: skewY(-6deg); /* إمالة الخلفية */
+      transform-origin: top left; /* نقطة الإمالة */
+    }
+
+    /* =========================
+       الحاوية الداخلية
+    ========================= */
+    .landing .container {
+      min-height: calc(100vh - 72px); /* يغطي طول الشاشة ناقص الهيدر */
+      display: flex; /* ترتيب النص والصورة أفقياً */
+      align-items: center; /* محاذاة عمودية */
+      padding-bottom: 120px; /* مسافة أسفل القسم */
+    }
+
+    /* =========================
+       النص داخل الهبوط
+    ========================= */
+    .landing .text {
+      flex: 1; /* يأخذ المساحة المتبقية */
+    }
+
+    /* توسيط النص على الشاشات الصغيرة */
+    @media (max-width: 991px) {
+      .landing .text {
+        text-align: center;
+      }
+    }
+
+    /* عنوان القسم */
+    .landing .text h1 {
+      color: var(--main-color-alt, #ff6600); /* اللون الافتراضي إذا لم يُحدد */
+      font-size: 40px; /* حجم العنوان */
+      margin: 0; /* إزالة المسافات حوله */
+      letter-spacing: -2px; /* تقليل المسافة بين الحروف */
+    }
+
+    /* تصغير العنوان للشاشات الصغيرة */
+    @media (max-width: 767px) {
+      .landing .text h1 {
+        font-size: 28px;
+      }
+    }
+
+    /* الفقرة */
+    .landing .text p {
+      font-size: 23px; 
+      line-height: 1.7; 
+      margin: 5px 0 0; 
+      color: #666; 
+      max-width: 500px; 
+    }
+
+    /* تنسيق الفقرة على الشاشات الصغيرة */
+    @media (max-width: 991px) {
+      .landing .text p {
+        margin: 10px auto; /* توسيط الفقرة */
+      }
+    }
+
+    @media (max-width: 767px) {
+      .landing .text p {
+        font-size: 18px; /* تصغير النص أكثر */
+      }
+    }
+
+    /* =========================
+       حركة الصورة
+    ========================= */
+    @keyframes up-and-down {
+      0%, 100% {
+        transform: translateY(0); /* البداية والنهاية */
+      }
+      50% {
+        transform: translateY(-20px); /* منتصف الحركة يصعد */
+      }
+    }
+
+    /* تنسيق الصورة */
+    .landing .image {
+      position: relative;
+      overflow: hidden; /* منع خروج الصورة */
+    }
+
+    .landing .image img {
+      width: 100%; 
+      max-width: 350px; 
+      animation: up-and-down 5s linear infinite; /* حركة مستمرة */
+      display: block; 
+      margin: 0 auto; /* مركز أفقياً */
+    }
+
+    /* إخفاء الصورة على الشاشات الصغيرة */
+    @media (max-width: 991px) {
+      .landing .image {
+        display: none;
+      }
+    }
+
+
+/* توسيط السهم في القسم */
+.landing .go-down {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  font-size: 15px;
+  color: var(--main-color);
+  animation: arrow-bounce 1.5s infinite; /* الحركة هنا على الأب مباشرة */
+  transition: color 0.3s ease;
+}
+
+.landing .go-down:hover {
+  color: var(--main-color-alt);
+}
+
+/* حركة السهم صعود ونزول */
+@keyframes arrow-bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+  40% { transform: translateX(-50%) translateY(-10px); }
+  60% { transform: translateX(-50%) translateY(-5px); }
+}
+
+/* ===== End Landing Section ===== */
+
+/* ===== Start Gallery Section ===== */
+.Gallery {
+  padding-top: var(--main-padding-top);       /* المسافة العلوية للقسم */
+  padding-bottom: var(--main-padding-bottom); /* المسافة السفلية للقسم */
+  position: relative;                          /* لتحديد موقع نسبي للعناصر الداخلية */
+}
+.Gallery .container {
+  display: grid;                               /* استخدام شبكة CSS */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* أعمدة متجاوبة بعرض أدنى 250 بكسل */
+  gap: 40px;                                  /* الفراغ بين العناصر */
+}
+.Gallery .box {
+  box-shadow: 0 2px 15px rgb(0 0 0 / 10%);   /* ظل خفيف للصندوق */
+  background-color: white;                     /* خلفية بيضاء للصندوق */
+  border-radius: 6px;                          /* حواف دائرية */
+  overflow: hidden;                            /* إخفاء المحتوى الزائد */
+  transition: transform var(--main-transition); /* تأثيرات انتقال سلسة */
+}
+.Gallery .box:hover {
+  transform: translateY(-10px);                /* رفع الصندوق قليلاً عند التمرير */
+  box-shadow: 0 2px 15px rgb(0 0 0 / 20%);    /* ظل أغمق عند التمرير */
+}
+.Gallery .box img {
+  width: 100%;                                /* عرض الصورة كامل داخل الصندوق */
+  max-width: 100%;                            /* الحد الأقصى لعرض الصورة */
+}
+.Gallery .box .content {
+  padding: 20px;                              /* حشو داخلي للمحتوى */
+}
+.Gallery .box .content h3 {
+  margin: 0;                                 /* إزالة الهوامش الافتراضية للعناوين */
+}
+.Gallery .box .content p {
+  margin: 10px 0 0;                          /* مسافة علوية فقط للنص */
+  line-height: 1.5;                          /* ارتفاع السطر لتحسين القراءة */
+  color: #777;                               /* لون رمادي متوسط للنص */
+}
+.Gallery .box .info {
+  padding: 20px;                             /* حشو داخلي لقسم المعلومات */
+  border-top: 1px solid #e6e6e7;             /* خط فاصل علوي */
+  display: flex;                             /* استخدام فليكس لمحاذاة المحتوى */
+  justify-content: space-between;            /* توزيع العناصر بشكل متساوٍ */
+  align-items: center;                        /* محاذاة رأسية في الوسط */
+}
+.Gallery .box .info a {
+  color: var(--main-color);                   /* لون الروابط بلون رئيسي */
+  font-weight: bold;                          /* نص عريض للروابط */
+}
+.Gallery .box .info i {
+  color: var(--main-color);                   /* لون الأيقونات مطابق للون الرئيسي */
+}
+.Gallery .box:hover .info i {
+  animation: moving-arrow 0.6s line}
+/* ===== End Gallery Section ===== */
+
+
+/* ===== Start Game-Features Section ===== */
+
+/* قسم م/* ============================= */
+/* Game Features Section CSS      */
+/* ============================= */
+
+.Game-Features {
+  padding: var(--main-padding-top) var(--main-padding-bottom);
+  background-color: var(--section-background);
+}
+
+/* شبكة العناصر */
+.Game-Features .container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 40px;
+}
+
+/* صندوق كل ميزة */
+.Game-Features .box {
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0px 12px 20px rgba(0,0,0,0.13), 0px 2px 4px rgba(0,0,0,0.12);
+  overflow: hidden; /* مهم للوميض */
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+/* تكبير الصندوق عند المرور */
+.Game-Features .box:hover {
+  transform: translateY(-10px); /* يرفع الصندوق لفوق */
+}
+
+/* الصورة داخل الصندوق */
+.Game-Features .box .img {
+  position: relative; /* مهم للعنصر الوهمي */
+  overflow: hidden; /* يخفي الزيادة خارج الصندوق */
+  border-radius: 10px;
+}
+
+/* الصورة نفسها */
+.Game-Features .box .img img {
+  display: block;
+  width: 100%;
+  transition: transform 0.7s ease; /* تكبير وتدوير */
+}
+
+/* العنصر الوهمي ::before لتأثير الوميض */
+.Game-Features .box .img::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+/* عند المرور على الصورة */
+.Game-Features .box:hover .img img {
+  transform: scale(1.1) rotate(5deg); /* تكبير + تدوير */
+}
+
+.Game-Features .box:hover .img::before {
+  width: 200%;
+  height: 200%;
+  opacity: 0.5;
+  transition: all 0.5s ease;
+}
+
+/* ===== End Game-Features Section ===== */
+
+
+/* ===== Start player-reviews =====*/
+.player-reviews {
+  padding-top: var(--main-padding-top);
+  padding-bottom: var(--main-padding-bottom);
+  position: relative;
+  background-color: var(--section-background);
+}
+.player-reviews .container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));  /*grid-template-columns = تقول للمتصفح "كم عمود أريد في صف الشبكة وما حجم كل عمود".*/
+/*
+repeat → كرّر الأعمدة تلقائيًا.
+
+auto-fill → ضع أكبر عدد ممكن من الأعمدة في الصف حسب مساحة الحاوية.
+
+minmax(300px, 1fr) → كل عمود لا يقل عن 300px ويمكن أن يتوسع ليأخذ نفس مساحة الأعمدة الأخرى.
+
+fr = fraction = جزء من المساحة المتاحة.
+يعني بدل تحديد العرض بوحدة px أو %، تقول للعمود: "خذ جزءًا من المساحة المتبقية بعد حساب كل شيء آخر".
+*/
+  gap: 40px;
+}
+.player-reviews .box {
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 7%);
+  border-radius: 6px;
+  position: relative;
+}
+.player-reviews .box img {
+  position: absolute;
+  right: -10px;
+  top: -50px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 10px solid var(--section-background);
+}
+.player-reviews .box h3 {
+  margin: 0 0 10px;
+}
+.player-reviews .box .title {
+  color: #777;
+  margin-bottom: 10px;
+  display: block;
+}
+.player-reviews .box .rate .filled {
+  color: #ffc107;
+}
+.player-reviews .box p {
+  line-height: 1.5;
+  color: #777;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+/*================ End player-reviews ======================*/
+
+
+/* ============================= */
+/* Start Game Dev Team Section */
+/* ============================= */
+
+/* القسم الرئيسي للفريق */
+.game-dev-team {
+  padding-top: var(--main-padding-top); 
+  padding-bottom: var(--main-padding-bottom); 
+  position: relative; /* لتكون العناصر ::before و::after بالنسبة لهذه الحاوية */
+}
+
+/* حاوية كل العناصر (الصناديق) */
+.game-dev-team .container {
+  display: grid; /* استخدام Grid Layout لترتيب الصناديق */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+  gap: 30px; /* المسافة بين الصناديق */
+}
+
+/* الصندوق الفردي لكل عضو */
+.game-dev-team .box {
+  position: relative; /* لتحديد موضع ::before و::after */
+}
+
+/* الخلفيات الزخرفية قبل وبعد الصندوق */
+.game-dev-team .box::before,
+.game-dev-team .box::after {
+  content: ""; /* عنصر وهمي */
+  position: absolute; /* موضع مطلق داخل الصندوق */
+  right: 0;
+  top: 0;
+  height: 100%; /* يغطي ارتفاع الصندوق بالكامل */
+  border-radius: 10px; 
+  transition: var(--main-transition); /* تأثير سلس عند التغيير */
+}
+
+/* الخلفية الأساسية خلف الصندوق */
+.game-dev-team .box::before {
+  width: calc(100% - 60px); /* عرض أقل قليلاً لإظهار العمق */
+  background-color: #f3f3f3; /* اللون الافتراضي */
+  z-index: -2; /* خلف كل العناصر */
+}
+
+/* الخلفية الثانوية التي تظهر عند المرور بالماوس */
+.game-dev-team .box::after {
+  width: 0; /* يبدأ غير مرئي */
+  background-color: #e4e4e4; /* لون مختلف لإضافة تباين */
+  z-index: -1; /* فوق الخلفية الأولى */
+}
+
+/* عند المرور على الصندوق بالماوس */
+.game-dev-team .box:hover::after {
+  width: calc(100% - 60px); /* يظهر العرض بالكامل تقريبًا */
+}
+
+/* جزء البيانات داخل الصندوق (الصورة + السوشيال) */
+.game-dev-team .box .data {
+  display: flex; 
+  align-items: center; 
+  padding-top: 60px; 
+}
+
+/* الصورة داخل الصندوق */
+.game-dev-team .box .data img {
+  width: calc(100% - 60px); /* عرض الصورة مع مراعاة الفراغ */
+  transition: var(--main-transition); /* تأثير سلس عند التغيير */
+  border-radius: 10px; /* حواف دائرية للصورة */
+}
+
+/* عند المرور على الصورة */
+.game-dev-team .box:hover img {
+  filter: grayscale(100%); /* تحويل الصورة إلى رمادية عند المرور */
+}
+
+/* أيقونات الشبكات الاجتماعية */
+.game-dev-team .box .data .social {
+  width: 60px; /* مساحة مخصصة للأيقونات */
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  gap: 20px; /* مسافة بين كل أيقونة */
+}
+
+/* روابط الأيقونات */
+.game-dev-team .box .data .social a {
+  width: 60px;
+  height: 30px;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+}
+
+/* تأثير المرور على أيقونات */
+.game-dev-team .box .data .social a:hover i {
+  color: var(--main-color); /* تغيير اللون عند المرور */
+}
+
+
+/* عند المرور على الصورة، تتحول الأيقونات إلى رمادي */
+.game-dev-team .box:hover img ~ .social i {    /*~اختار كل العناصر اللي بعد العنصر المستهدف، بشرط يكونوا في نفس الأب".*/
+  color: #777;
+}
+
+/* معلومات العضو (الاسم والوصف) */
+.game-dev-team .box .info {
+  padding-left: 80px; /* مسافة من اليسار للفصل بين الصورة والنص */
+}
+
+/* اسم العضو */
+.game-dev-team .box .info h3 {
+  margin-bottom: 0; /* إزالة الهامش السفلي الافتراضي */
+  color: var(--main-color); /* لون رئيسي */
+  font-size: 22px; 
+  transition: var(--main-transition); /* تأثير سلس عند التغيير */
+}
+
+/* وصف العضو */
+.game-dev-team .box .info p {
+  margin-top: 10px; 
+  margin-bottom: 25px; 
+}
+
+/* تغيير لون الاسم عند المرور على الصندوق */
+.game-dev-team .box:hover .info h3 {
+  color: #777; /* يتحول للرمادي عند المرور */
+}
+
+/* ============================= */
+/* End Game Dev Team Section */
+/* ============================= */
+
+/* =================================== */
+/* Start Services */
+/* ==================================== */
+/* Start Services */
+.services {
+  padding-top: var(--main-padding-top); /* مسافة من الأعلى حسب المتغير */
+  padding-bottom: var(--main-padding-bottom); /* مسافة من الأسفل حسب المتغير */
+  position: relative; /* لتمكين التموضع المطلق للعناصر بداخله */
+  background-color: var(--section-background); /* لون خلفية القسم */
+}
+
+.services .container {
+  display: grid; /* استخدام الشبكة لترتيب العناصر */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* توزيع الأعمدة تلقائياً */
+  gap: 40px; /* المسافة بين الصناديق */
+}
+
+.services .box {
+  background-color: white; /* لون خلفية الصندوق */
+  box-shadow: 0 12px 20px 0 rgb(0 0 0 / 13%), 
+              0 2px 4px 0 rgb(0 0 0 / 12%); /* ظل الصندوق */
+  counter-increment: services; /* زيادة عداد الخدمات */
+  transition: var(--main-transition); /* تأثير الانتقال السلس */
+  position: relative; /* لتمكين الـ ::before والـ ::after */
+}
+
+.services .box::before {
+  content: ""; /* عنصر وهمي */
+  left: 50%; /* تموضع في المنتصف أفقياً */
+  transform: translateX(-50%); /* ضبط التموضع في المنتصف */
+  height: 3px; /* ارتفاع الخط */
+  top: -3px; /* وضعه فوق الصندوق */
+  background-color: var(--main-color); /* لون الخط */
+  position: absolute; /* تموضع مطلق */
+  width: 0; /* عرض صفر مبدئياً */
+  transition: var(--main-transition); /* انتقال سلس عند التغيير */
+}
+
+.services .box:hover {
+  transform: translateY(-10px); /* رفع الصندوق عند مرور الماوس */
+}
+
+.services .box:hover::before {
+  width: 100%; /* توسيع الخط ليملأ عرض الصندوق */
+}
+/* أيقونات خدمات */
+.services .box i {
+  display: block; /* تحويل العنصر لكتلة */
+  margin: 30px auto 20px; /* مسافات فوق وتحت مع توسيط أفقي */
+  text-align: center; /* توسيط محتوى النص (لأيقونات Font Awesome أحيانًا ليس ضروري) */
+  color: #d5d5d5; /* لون الأيقونة */
+  font-size: 50px; /* يمكن التحكم في حجم الأيقونة */
+}
+
+
+.services .box > h3 {
+  text-align: center; /* توسيط النص */
+  margin: 20px 0 40px; /* مسافات خارجية */
+  font-size: 25px; /* حجم الخط */
+  color: var(--main-color); /* لون النص */
+}
+
+.services .box .info {
+  padding: 15px; /* مسافة داخلية */
+  position: relative; /* لتمكين العناصر المطلقة داخله */
+  background-color: #f9f9f9; /* لون خلفية المنطقة السفلية */
+  text-align: right; /* محاذاة النص لليمين */
+}
+
+.services .box .info::before {
+  content: "0" counter(services); /* عرض رقم الخدمة */
+  position: absolute; /* تموضع مطلق */
+  background-color: var(--main-color); /* لون خلفية الرقم */
+  color: white; /* لون الرقم */
+  left: 0; /* محاذاة لليسار */
+  top: 0; /* محاذاة للأعلى */
+  height: 100%; /* يغطي الارتفاع بالكامل */
+  width: 80px; /* عرض مستطيل الرقم */
+  font-size: 30px; /* حجم الرقم */
+  font-weight: bold; /* سمك الخط */
+  display: flex; /* استخدام flex لتوسيط الرقم */
+  justify-content: center; /* توسيط أفقي */
+  align-items: center; /* توسيط عمودي */
+  padding-right: 15px; /* مسافة داخلية لليمين */
+}
+
+.services .box .info::after {
+  content: ""; /* عنصر وهمي */
+  position: absolute; /* تموضع مطلق */
+  background-color: #d5d5d5; /* لون الشريط المائل */
+  top: 0; /* محاذاة للأعلى */
+  left: 80px; /* يبدأ بعد الرقم */
+  width: 50px; /* عرض الشريط */
+  height: calc(100% + 0.4px); /* ارتفاع مع تصحيح بسيط */
+  transform: skewX(-30deg); /* ميل للشريط */
+}
+
+.services .box .info a {
+  color: var(--main-color); /* لون الرابط */
+}
+/*=============================*/ 
+/* End Services */
+/*=========================== */ 
+
+/* ================================= */
+         /* Start Skills*/
+ /*================================  */
+.game-skills {
+  /* مسافة من الأعلى والأسفل باستخدام المتغيرات */
+  padding-top: var(--main-padding-top);
+  padding-bottom: var(--main-padding-bottom);
+  position: relative; /* علشان نقدر نتحكم في العناصر بداخله */
+}
+
+/* تنسيق الحاوية الأساسية */
+.game-skills .container {
+  display: flex; /* عرض العناصر بجانب بعض */
+  align-items: center; /* محاذاة العناصر عموديًا في المنتصف */
+}
+
+/* إخفاء الصورة في الشاشات الصغيرة */
+@media (max-width: 991px) {
+  .game-skills img {
+    display: none;
+  }
+}
+
+/* الحاوية الخاصة بالمهارات */
+.game-skills .skills {
+  flex: 1; /* تاخد المساحة المتبقية من العرض */
+}
+
+/* العنوان لكل مهارة والنسبة بجانبه */
+.game-skills .skill h3 {
+  display: flex; /* عرض النص والنسبة بجانب بعض */
+  justify-content: space-between; /* تباعد بين النص والنسبة */
+  align-items: center; /* محاذاة عمودية */
+}
+
+/* تصميم النسبة بجانب اسم المهارة */
+.game-skills .skill h3 span {
+  font-size: 12px; /* حجم الخط */
+  border: 1px solid #ccc; /* إطار خفيف */
+  padding: 3px 5px; /* مسافة داخلية */
+  border-radius: 4px; /* حواف دائرية */
+  color: var(--main-color); /* اللون الرئيسي للموقع */
+}
+
+/* تصميم شريط التقدم */
+.game-skills .skill .the-progress {
+  height: 30px; /* ارتفاع الشريط */
+  background-color: #eee; /* لون الخلفية */
+  position: relative; /* لتحديد موضع العنصر الداخلي */
+}
+
+/* العنصر الذي يمثل الجزء الممتلئ من شريط التقدم */
+.game-skills .skill .the-progress span {
+  position: absolute; /* وضع مطلق داخل الشريط */
+  left: 0; /* يبدأ من اليسار */
+  top: 0; /* يبدأ من الأعلى */
+  height: 100%; /* نفس ارتفاع الشريط */
+  background-color: var(--main-color); /* اللون الرئيسي للموقع */
+}
+
+
+/* ================================= */
+      /* End Game Skills */
+/* ================================== */
+  
+/* ============================= */
+/* Start Game Steps Section CSS  */
+/* ============================= */
+
+/* Main container for the game steps section */
+.game-steps {
+  padding-top: var(--main-padding-top);       /* المسافة من الأعلى */
+  padding-bottom: var(--main-padding-bottom); /* المسافة من الأسفل */
+  position: relative;                          /* للسماح بوضع عناصر مطلقة داخلها */
+  background-color: var(--section-background); /* لون خلفية القسم */
+}
+
+/* Container داخل القسم لتنظيم المحتوى أفقياً */
+.game-steps .container {
+  display: flex;              /* عرض المحتوى في صف */
+  align-items: center;        /* محاذاة عمودية للوسط */
+  justify-content: space-between; /* توزيع العناصر بالتساوي */
+}
+
+/* عند شاشات أصغر من 991px، تصبح العناصر عمودية */
+@media (max-width: 991px) {
+  .game-steps .container {
+    flex-direction: column;
+  }
+}
+
+/* صورة جانبية للقسم */
+.game-steps .image {
+  max-width: 100%;           /* لا تتجاوز حجم الحاوية */
+  margin-right: 100px;       /* مسافة من اليمين */
+}
+
+/* تعديل الهوامش للصور عند الشاشات الصغيرة */
+@media (max-width: 991px) {
+  .game-steps .image {
+    margin: 0 0 50px;
+  }
+}
+
+/* كل مربع خطوة في القسم */
+.game-steps .info .box {
+  background-color: #f6f5f5; /* لون خلفية الصندوق */
+  padding: 30px;              /* مسافة داخلية للصندوق */
+  margin-bottom: 20px;        /* مسافة بين الصناديق */
+  border-radius: 6px;         /* زوايا دائرية للصندوق */
+  display: flex;              /* ترتيب المحتوى داخل الصندوق أفقياً */
+  align-items: center;        /* محاذاة العناصر عمودياً للوسط */
+  border: 2px solid white;    /* حدود بيضاء */
+  position: relative;         /* لعنصر pseudo ::before */
+  z-index: 1;                 /* ضمان ظهور المحتوى فوق الخلفية */
+}
+
+/* عند شاشات أصغر من 767px، تصبح الصناديق عمودية */
+@media (max-width: 767px) {
+  .game-steps .info .box {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* تأثير خلفية عند التمرير على الصندوق */
+.game-steps .info .box::before {
+  content: "";
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  width: 0;
+  height: 0;
+  transform: translate(-50%, -50%);
+  background-color: #ededed;
+  z-index: -1;
+  transition: var(--main-transition);
+}
+
+/* تكبير الخلفية عند hover */
+.game-steps .info .box:hover::before {
+  width: 100%;
+  height: 100%;
+}
+
+/* صورة داخل الصندوق */
+.game-steps .info .box img {
+  width: 100px;          /* حجم الأيقونة أو الصورة */
+  margin-right: 30px;    /* مسافة عن النص */
+}
+
+/* تعديل الصورة عند الشاشات الصغيرة */
+@media (max-width: 767px) {
+  .game-steps .info .box img {
+    margin: 0 0 30px;
+  }
+}
+
+/* عنوان الخطوة */
+.game-steps .info .box h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+/* وصف الخطوة */
+.game-steps .info .box p {
+  color: #777;          /* لون النص */
+  line-height: 1.7;     /* ارتفاع السطر */
+  margin: 10px 0 0;     /* مسافة فوق النص */
+  font-size: 18px;       /* حجم النص */
+}
+
+/* ============================= */
+/* End Game Steps Section CSS    */
+/* ============================= */
+
+/* ========================================= */
+/* Start Events - قسم الفعاليات */
+/* ========================================= */
+.events {
+  padding-top: var(--main-padding-top); /* المسافة العلوية للقسم */
+  padding-bottom: var(--main-padding-bottom); /* المسافة السفلية للقسم */
+  position: relative; /* لتحديد موقع عناصر مطلقة داخل القسم إذا احتجنا */
+}
+
+.events .container {
+  display: flex; /* ترتيب العناصر أفقياً */
+  align-items: center; /* محاذاة العناصر عمودياً في المنتصف */
+  flex-wrap: wrap; /* السماح للعناصر بالانتقال لسطر جديد عند صغر الشاشة */
+}
+
+.events img {
+  max-width: 450px; /* الحد الأقصى لعرض الصورة */
+}
+
+/* عند الشاشات الصغيرة، نخفي الصورة لأنها تشغل مساحة */
+@media (max-width: 991px) {
+  .events img {
+    display: none;
+  }
+}
+
+.events .info {
+  flex: 1; /* يأخذ المساحة المتبقية بجانب الصورة */
+}
+
+/* عداد الوقت */
+.events .info .time {
+  display: flex;
+  align-items: center;
+  margin: 20px auto;
+  gap: 10px; /* مسافة بين كل وحدة زمنية */
+  justify-content: center; /* وضعها في منتصف العرض */
+}
+
+.events .info .time .unit {
+  border: 2px solid #ff3d00; /* لون مميز يناسب الألعاب */
+  border-radius: 12px; /* حواف أكتر نعومة */
+  text-align: center;
+  width: 80px; /* تكبير شوية */
+  background: linear-gradient(145deg, #1a1a1a, #333); /* خلفية داكنة مع تأثير تدريجي */
+  box-shadow: 0 0 10px #ff3d00, 0 0 20px #ff3d00 inset; /* تأثير توهج */
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.events .info .time .unit span:first-child {
+  font-size: 40px; /* أكبر */
+  padding: 15px;
+  color: #ff3d00; /* لون جذاب للألعاب */
+  font-weight: bold;
+}
+
+.events .info .time .unit span:last-child {
+  padding: 8px 10px;
+  font-size: 14px; /* تكبير شوية */
+  color: #fff; /* نص أبيض واضح */
+  border-top: 1px solid #ff3d00;
+}
+
+/* تأثير عند المرور على الوحدة */
+.events .info .time .unit:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #ff3d00, 0 0 30px #ff3d00 inset;
+}
+
+/* عنوان الفعالية */
+.events .title {
+  text-align: center;
+  margin: 40px 0 0;
+  font-size: 32px; /* أكبر شوية لعنوان رئيسي جذاب */
+  color: #ff3d00; /* لون برتقالي يناسب الألعاب */
+  text-shadow: 2px 2px 5px #000; /* ظل للنص لإبرازه */
+  font-family: 'Orbitron', sans-serif; /* خط عصري مناسب للألعاب */
+}
+
+/* وصف الفعالية */
+.events .description {
+  text-align: center;
+  line-height: 1.7;
+  font-size: 18px;
+  color: #150d0d8a; /* لون فاتح للوضوح على خلفية داكنة */
+  max-width: 700px; /* لتقييد عرض النصوص */
+  margin: 10px auto 0;
+  font-family: 'Arial', sans-serif; /* خط واضح للقراءة */
+}
+
+/* نموذج الاشتراك بالبريد */
+.events .subscribe {
+  width: 100%;
+  margin-top: 50px;
+}
+
+.events .subscribe form {
+  width: 600px;
+  margin: 20px auto;
+  padding: 30px 40px;
+  background-color: #222; /* خلفية داكنة لمظهر الألعاب */
+  border-radius: 30px; /* حواف دائرية متوسطة */
+  display: flex;
+  gap: 20px;
+  box-shadow: 0 0 20px #ff3d00 inset; /* تأثير توهج داخلي */
+}
+
+@media (max-width: 767px) {
+  .events .subscribe form {
+    max-width: 100%;
+    padding: 20px;
+    flex-direction: column;
+    border-radius: 0;
+  }
+}
+
+/* حقل البريد */
+.events .subscribe form input[type="email"] {
+  padding: 18px;
+  border-radius: 20px;
+  border: none;
+  flex: 1;
+  background-color: #333; /* خلفية داكنة */
+  color: #fff;
+  caret-color: #ff3d00;
+}
+
+.events .subscribe form input[type="email"]:focus {
+  outline: none;
+  box-shadow: 0 0 10px #ff3d00; /* توهج عند التركيز */
+}
+
+.events .subscribe form input[type="email"]::placeholder {
+  color: #aaa;
+  transition: opacity var(--main-transition);
+}
+
+.events .subscribe form input[type="email"]:focus::placeholder {
+  opacity: 0;
+}
+
+/* زر الاشتراك */
+.events .subscribe form input[type="submit"] {
+  border-radius: 20px;
+  border: none;
+  background-color: #ff3d00;
+  color: white;
+  font-weight: bold;
+  padding: 18px;
+  cursor: pointer;     /*تُستخدم لتغيير شكل مؤشر الفأرة عندما يمر فوق عنصر معيّن،
+   بحيث يظهر على شكل يد (🖱️👉) للدلالة على أن هذا العنصر قابل للنقر، مثل الروابط أو الأزرار.*/
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.events .subscribe form input[type="submit"]:hover {
+  background-color: #ff6600;
+  transform: scale(1.05); /* تكبير عند المرور */
+  box-shadow: 0 0 15px #ff3d00;
+}
+
+/* ============================================== */
+/* End Events - نهاية قسم الفعاليات */
+/* ============================================== */
+
+/* ============================
+   Start Pricing Section Styles
+   ============================ */
+
+/* تنسيق القسم الرئيسي للتسعير */
+.pricing {
+  padding-top: var(--main-padding-top); /* مسافة من الأعلى باستخدام متغير */
+  padding-bottom: var(--main-padding-bottom); /* مسافة من الأسفل باستخدام متغير */
+  position: relative; /* لتحديد موضع العناصر بداخله بالنسبة له */
+  background-color: var(--section-background); /* لون خلفية القسم */
+}
+
+/* الحاوية التي تحتوي على عناصر التسعير */
+.pricing .container {
+  display: grid; /* استخدام شبكة لتوزيع العناصر */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* توزيع الأعمدة تلقائيًا مع حد أدنى 300px */
+  gap: 30px; /* مسافة بين الأعمدة */
+}
+
+/* الصندوق الواحد الخاص بعرض خطة السعر */
+.pricing .box {
+  position: relative;
+  box-shadow: 0 12px 20px 0 rgb(0 0 0 / 13%), /* ظل أساسي */
+              0 2px 4px 0 rgb(0 0 0 / 12%);   /* ظل إضافي خفيف */
+  transition: var(--main-transition); /* حركة سلسة عند التغيير */
+  background: white; /* خلفية بيضاء للصندوق */
+  text-align: center; /* محاذاة المحتوى للوسط */
+  z-index: 1; /* وضعه فوق العناصر الخلفية */
+}
+
+/* إعداد المؤثرات الخلفية للصندوق عند المرور عليه */
+.pricing .box::before,
+.pricing .box::after {
+  content: ""; /* عنصر فارغ */
+  width: 0; /* يبدأ العرض بصفر */
+  height: 50%; /* نصف ارتفاع الصندوق */
+  background-color: #f6f6f6; /* لون الخلفية */
+  position: absolute; /* تحديد موضعه بالنسبة للصندوق */
+  z-index: -1; /* خلف الصندوق */
+  transition: var(--main-transition); /* حركة سلسة */
+}
+
+/* المؤثر على الجزء العلوي من الصندوق */
+.pricing .box::before {
+  left: 0;
+  top: 0;
+}
+
+/* المؤثر على الجزء السفلي من الصندوق */
+.pricing .box::after {
+  right: 0;
+  bottom: 0;
+}
+
+/* عند المرور بالفأرة يتم ملء الخلفية */
+.pricing .box:hover::before,
+.pricing .box:hover::after {
+  width: 100%;
+}
+
+/* تعديل على الصندوق الأكثر شعبية في الشاشات الكبيرة */
+@media (min-width: 1200px) {
+  .pricing .box.popular {
+    top: -20px; /* رفعه قليلاً للأعلى */
+  }
+}
+
+/* شريط "الأكثر شعبية" في الصندوق */
+.pricing .box.popular .label {
+  position: absolute;
+  writing-mode: vertical-rl; /* النص عمودي */
+  background-color: var(--main-color); /* لون الشريط */
+  color: white; /* لون النص */
+  font-weight: bold; /* نص عريض */
+  padding: 10px 10px 35px 10px; /* مسافة داخلية */
+  font-size: 18px; /* حجم النص */
+  right: 20px; /* مسافة من اليمين */
+  width: 40px; /* عرض الشريط */
+}
+
+/* المثلث الصغير أسفل الشريط */
+.pricing .box.popular .label::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-style: solid;
+  border-color: transparent transparent white; /* المثلث أبيض من الأسفل */
+  border-width: 20px;
+}
+
+/* عنوان خطة السعر */
+.pricing .box .title {
+  font-weight: bold;
+  margin: 30px 0;
+  font-size: 25px;
+  letter-spacing: -1px; /* تقليل المسافة بين الحروف */
+}
+
+/* صورة الخطة */
+.pricing .box img {
+  width: 80px;
+  margin-bottom: 30px;
+}
+
+/* حاوية السعر */
+.pricing .box .price {
+  margin-bottom: 20px;
+}
+
+/* ===== عرض المبلغ داخل صندوق التسعير مع تأثير جذاب ===== */
+.pricing .box .amount {
+  display: block;                           /* جعل العنصر عنصر كتلة لاحتلال سطر كامل */
+  font-size: 60px;                          /* تكبير حجم الخط للمبلغ */
+  font-weight: bold;                         /* خط عريض للمبلغ */
+  margin-bottom: 5px;                        /* مسافة أسفل المبلغ */
+  color: var(--main-color);                 /* اللون الرئيسي للموقع */
+  text-align: center;                        /* توسيط المبلغ داخل الصندوق */
+  text-shadow: 0 0 10px var(--main-color), 0 0 20px var(--main-color-alt); /* إضافة توهج أولي */
+  animation: glowAmount 2s infinite alternate; /* حركة توهج متكررة ذهاب وإياب */
+}
+
+/* ===== أنيميشن توهج المبلغ ===== */
+@keyframes glowAmount {
+  0% {
+    text-shadow: 0 0 10px var(--main-color), 0 0 20px var(--main-color-alt); /* بداية التوهج */
+  }
+  100% {
+    text-shadow: 0 0 20px var(--main-color), 0 0 40px var(--main-color-alt); /* أقصى توهج */
+  }
+}
+
+
+/* فترة الاشتراك (شهر / سنة) */
+.pricing .box .time {
+  color: #777; /* رمادي فاتح */
+}
+/* أيقونة الصح قبل كل ميزة مع محاذاة الأيقونة والنص على خط واحد */
+.pricing .box ul li {
+  display: flex; /* استخدام Flexbox لمحاذاة الأيقونة والنص */
+  align-items: center; /* محاذاة عمودية للنص مع الأيقونة */
+  padding: 20px;
+  border-top: 1px solid #eee;
+  transition: transform 0.3s ease, background-color 0.3s ease; /* حركة ناعمة عند المرور */
+}
+
+/* عند المرور بالفأرة على عنصر الميزة */
+.pricing .box ul li:hover {
+  transform: translateY(-10px); /* تحريك العنصر للأعلى */
+  background-color: #f9f9f9; /* تغيير خلفية خفيفة */
+}
+
+/* أيقونة الصح قبل كل ميزة */
+.pricing .box ul li::before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f00c"; /* رمز الصح */
+  margin-right: 10px; /* مسافة بين الأيقونة والنص */
+  font-weight: 900;
+  color: var(--main-color);
+  flex-shrink: 0; /* منع الأيقونة من الانكماش */
+}
+
+
+/* ===== زر الاشتراك أو أي زر داخل pricing box ===== */
+.pricing .box a {
+  display: inline-block; /* يجعل الزر يظهر كعنصر قابل للعرض مع الحفاظ على المحتوى */
+  width: fit-content;    /* عرض الزر يتناسب مع النص بداخله */
+  margin: 30px auto 40px; /* مسافة فوق وتحت، مع توسيطه أفقياً */
+  padding: 15px 30px;     /* مساحة داخلية من الأعلى والأسفل واليمين واليسار */
+  border: 2px solid var(--main-color); /* حدود باللون الرئيسي للموقع */
+  border-radius: 50px;    /* زوايا مستديرة لإعطاء شكل عصري */
+  color: var(--main-color); /* لون النص */
+  font-weight: bold;       /* خط عريض للنص */
+  font-size: 18px;         /* حجم الخط */
+  text-transform: uppercase; /* تحويل النص إلى حروف كبيرة */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* ظل خفيف لإعطاء عمق */
+  transition: all 0.3s ease; /* حركة ناعمة عند التفاعل مع الزر */
+}
+
+/* ===== تأثير المرور بالفأرة ===== */
+.pricing .box a:hover {
+  background-color: var(--main-color); /* تغيير خلفية الزر للون الرئيسي */
+  color: white;                         /* تغيير لون النص للأبيض */
+  transform: translateY(-3px);          /* رفع الزر قليلاً لإحساس بالحركة */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3); /* تكبير الظل لإبراز الزر */
+}
+
+/* ===== تأثير الضغط على الزر ===== */
+.pricing .box a:active {
+  transform: translateY(1px);            /* إعادة الزر للأسفل قليلاً عند الضغط */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* تقليل الظل أثناء الضغط */
+}
+
+
+/* ============================
+   End Pricing Section Styles
+   ============================ */
+
+
+   /* ============================
+   Start Videos Section Styles
+   ============================ */
+
+/* تنسيق القسم الرئيسي للفيديوهات */
+.videos {
+  padding-top: var(--main-padding-top);   /* مسافة من الأعلى باستخدام متغير */
+  padding-bottom: var(--main-padding-bottom); /* مسافة من الأسفل باستخدام متغير */
+}
+
+/* الحاوية التي تجمع القائمة والمعاينة */
+.videos .holder {
+  display: flex; /* ترتيب العناصر جنب بعض أفقياً */
+  justify-content: center; /* محاذاة العناصر في الوسط */
+  background-color: var(--section-background); /* خلفية القسم */
+  border: 1px solid #ddd; /* إطار رمادي خفيف */
+}
+
+/* في الشاشات الصغيرة (أقل من 991px) يتم جعل العناصر فوق بعض عموديًا */
+@media (max-width: 991px) {
+  .videos .holder {
+    flex-direction: column;
+  }
+}
+
+/* صندوق القائمة الجانبية للفيديوهات */
+.videos .holder .list {
+  min-width: 300px; /* عرض ثابت على الأقل */
+  background-color: white; /* خلفية بيضاء للقائمة */
+}
+
+/* العنوان العلوي للقائمة */
+.videos .holder .list .name {
+  display: flex; /* عرض النص والأيقونة جنب بعض */
+  justify-content: space-between; /* مسافة بين النص والأيقونة */
+  padding: 20px; /* مسافة داخلية */
+  background-color: #f4f4f4; /* خلفية رمادية فاتحة */
+  font-weight: bold; /* نص عريض */
+  /* color: var(--main-color); */ /* اللون الرئيسي - معلق حاليًا */
+}
+
+/* عنصر واحد داخل قائمة الفيديوهات */
+.videos .holder .list ul li {
+  padding: 20px; /* مسافة داخلية */
+  border-top: 1px solid var(--section-background); /* خط فاصل علوي */
+  cursor: pointer; /* شكل المؤشر يصبح يد عند المرور */
+  transition: var(--main-transition); /* حركة سلسة عند التغيير */
+}
+
+/* تأثير عند مرور الفأرة على عنصر الفيديو */
+.videos .holder .list ul li:hover {
+  background-color: #fafafa; /* تغيير الخلفية إلى رمادي فاتح */
+  color: var(--main-color); /* تغيير لون النص إلى اللون الرئيسي */
+}
+
+/* تنسيق الوقت أسفل عنوان الفيديو */
+.videos .holder .list ul li span {
+  display: block; /* جعله في سطر مستقل */
+  margin-top: 10px; /* مسافة من الأعلى */
+  color: #777; /* لون رمادي */
+}
+
+/* صندوق عرض الفيديو */
+.videos .holder .preview {
+  background-color: #e2e2e2; /* خلفية رمادية */
+  padding: 10px; /* مسافة داخلية */
+  display: flex;
+  flex-direction: column; /* ترتيب عمودي */
+  justify-content: space-between; /* توزيع العناصر على كامل المساحة */
+}
+
+/* صورة عرض الفيديو */
+.videos .holder .preview img {
+  max-width: 100%; /* جعل العرض لا يتجاوز عرض الحاوية */
+}
+
+/* النص أسفل صورة الفيديو */
+.videos .holder .preview .info {
+  padding: 20px; /* مسافة داخلية */
+  background-color: white; /* خلفية بيضاء */
+  margin-top: 10px; /* مسافة من الأعلى */
+}
+
+/* ============================
+   End Videos Section Styles
+   ============================ */
+
+
+   /* ============================
+   Start Stats Section Styles
+   ============================ */
+
+/* Start Player Stats - Gaming Action Edition */
+.stats {
+  padding-top: var(--main-padding-top);
+  padding-bottom: var(--main-padding-bottom);
+  position: relative;
+  /* background-image: url("../imgs/stats-gaming-bg.jpg"); /* خلفية ألعاب 
+  background-size: cover;
+  background-position: center;
+  min-height: 300px; */
+}
+
+/* إضافة طبقة داكنة فوق خلفية قسم الإحصائيات لجعل المحتوى أوضح */
+.stats::before {
+  content: ""; /* إنشاء عنصر افتراضي بدون محتوى */
+  position: absolute; /* تحديد موضعه بالنسبة للقسم الأساسي */
+  left: 0; /* بداية من أقصى اليسار */
+  top: 0; /* بداية من أعلى القسم */
+  width: 100%; /* يغطي عرض القسم بالكامل */
+  height: 100%; /* يغطي ارتفاع القسم بالكامل */
+  background: rgba(10, 10, 10, 0.9); /* لون أسود داكن مع شفافية 90% لإبراز النصوص والأيقونات */
+}
+
+.stats h2 {
+  font-weight: bold;
+  font-size: 45px;
+  color: #ff4b3e; /* اللون الرئيسي */
+  text-shadow: 0 0 15px #ff4b3e, 0 0 30px #ff4b3e;
+  width: fit-content;
+  margin: 0 auto 50px;
+  position: relative;
+  animation: glowTitle 2s infinite alternate;    /* 
+  تطبيق أنيميشن باسم glowTitle على العنصر
+  - المدة: 2 ثانية لكل دورة
+  - infinite: التكرار بدون توقف
+  - alternate: التبديل بين الاتجاهين (ذهاب وإياب) للحصول على تأثير ناعم
+*/
+
+}
+
+.stats .container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.stats .box {
+  background: rgba(30, 30, 30, 0.95);
+  padding: 30px 15px;
+  text-align: center;
+  position: relative;    /* للسماح باستخدام عناصر قبل/بعد بشكل نسبي */
+  border: 2px solid #ff4b3e;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #ff4b3e;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.stats .box:hover {
+  transform: scale(1.08) rotate(-1deg);
+  box-shadow: 0 0 25px #ff4b3e, 0 0 40px #ff9a3e;
+}
+
+/* scale(1.08): يكبر المربع بنسبة 8% عند المرور عليه، عشان يعطي إحساس بالحركة.
+
+rotate(-1deg): يدوّر المربع بشكل خفيف، ده بيخلي الحركة طبيعية ومثيرة.
+
+box-shadow: زيادة التوهج عند المرور تضيف تأثير Glow قوي يخطف العين. */
+
+
+/* 
+.stats .box i {
+  font-size: 40px; /* تكبير الأيقونات 
+  /* color: #f3e7e7; أيقونات بيضاء واضحة 
+  text-shadow: 0 0 15px #ff4b3e, 0 0 25px #ff4b3e;
+  margin-bottom: 15px;
+} */
+
+.stats .box .number {
+  display: block;
+  font-size: 60px; /* تكبير الرقم */
+  font-weight: bold;
+  margin: 10px 0;
+  color: #ffffff; /* رقم أبيض */
+  text-shadow: 0 0 20px #ff4b3e, 0 0 30px #ff4b3e;
+}
+
+.stats .box .text {
+  color: #ff4b3e; /* اللون الرئيسي للنص */
+  font-style: italic;
+  font-size: 22px; /* تكبير النص */
+  font-weight: bold;
+  text-shadow: 0 0 10px #ff4b3e, 0 0 20px #ff4b3e;
+}
+
+@keyframes glowTitle {
+  0% { text-shadow: 0 0 15px #ff4b3e; }
+  100% { text-shadow: 0 0 25px #ff4b3e, 0 0 40px #ff9a3e; }
+}
+
+/* ============================================== */
+/* End Player Stats - Gaming Action Edition */
+/* ============================================== */
+
+
+/* ================================ */
+/*  Start Discount Section */
+/* ================================ */
+.discount {
+  min-height: 100vh; /* ارتفاع القسم يغطي طول الشاشة بالكامل */
+  display: flex; /* استخدام Flexbox لترتيب العناصر بجانب بعض */
+  flex-wrap: wrap; /* السماح بانتقال العناصر للسطر التالي على الشاشات الصغيرة */
+  padding-bottom: 50px; /* مسافة أسفل القسم */
+}
+
+.discount .image {
+  background-image: url(../imgs/discount-background1.jpg); /* صورة خلفية القسم */
+  background-size: cover; /* جعل الصورة تغطي المساحة بالكامل */
+  color: white; /* لون النصوص أبيض */
+  flex-basis: 50%; /* عرض العمود 50% من المساحة */
+  display: flex; /* استخدام Flexbox لمحتوى العمود */
+  align-items: center; /* محاذاة المحتوى عموديًا */
+  justify-content: center; /* محاذاة المحتوى أفقيًا */
+  position: relative; /* للسماح بإضافة عناصر فوقه (مثل ::before) */
+  z-index: 1; /* جعل الطبقة فوق أي طبقة سفلية */
+  animation: change-background 10s linear infinite; /* أنيميشن لتغيير الخلفية */
+}
+
+.discount .image::before {
+  content: ""; /* محتوى فارغ لإنشاء طبقة فوق الصورة */
+  position: absolute; /* تموضع مطلق يغطي الخلفية */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color:var(--main-color); /* طبقة زرقاء شبه شفافة فوق الصورة */
+  z-index: -1; /* إرسال الطبقة للخلف أسفل المحتوى */
+}
+
+/* 📱 استجابة للشاشات الصغيرة - جعل الصورة بعرض كامل */
+@media (max-width: 991px) {
+  .discount .image {
+    flex-basis: 100%;
+  }
+}
+
+.discount .form {
+  display: flex; /* استخدام Flexbox */
+  align-items: center; /* محاذاة المحتوى عموديًا */
+  justify-content: center; /* محاذاة المحتوى أفقيًا */
+  flex-basis: 50%; /* عرض العمود 50% */
+}
+
+/*  استجابة للشاشات الصغيرة - جعل الفورم بعرض كامل */
+@media (max-width: 991px) {
+  .discount .form {
+    flex-basis: 100%;
+  }
+}
+
+/*  تصميم حقول الإدخال */
+.discount .form .input {
+  display: block; /* جعل الحقل يأخذ سطر كامل */
+  width: 100%; /* عرض كامل */
+  margin-bottom: 25px; /* مسافة أسفل الحقل */
+  padding: 15px; /* مسافة داخلية */
+  border: none; /* بدون حدود */
+  border-bottom: 1px solid #ccc; /* خط سفلي رمادي */
+  background-color: #f9f9f9; /* لون خلفية فاتح */
+  caret-color: var(--main-color); /* لون مؤشر الكتابة */
+}
+
+.discount .form textarea.input {
+  resize: none; /* منع تغيير حجم مربع النص */
+  height: 200px; /* ارتفاع ثابت */
+}
+
+.discount .form .input:focus {
+  outline: none; /* إخفاء الإطار الافتراضي عند التركيز */
+}
+
+
+/*  زر الإرسال بأسلوب جيمينج */
+.discount .form [type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background-color: #ff3d00; /* برتقالي */
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 0 15px #ff3d00;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease-in-out;
+}
+
+
+.discount .form [type="submit"]:hover {
+  background-color: var(--main-color-alt); /* لون بديل عند التمرير */
+}
+
+/*  محتوى النصوص داخل القسم */
+.discount .content {
+  text-align: center; /* محاذاة النصوص في المنتصف */
+  padding: 0 20px; /* مسافة جانبية */
+}
+.discount .content h2 {
+  font-size: 40px; /* حجم عنوان كبير */
+  letter-spacing: -2px; /* تقليل المسافة بين الحروف */
+  color: #ff3d00; /* لون برتقالي جيمينج */
+  text-transform: uppercase; /* حروف كبيرة */
+  text-shadow: 0 0 10px #ff3d00, 0 0 20px #ff3d00; /* إضاءة */
+  animation: glowTitle 2s infinite alternate; /* حركة الإضاءة */
+
+  /* كلمة infinite معناها إن الحركة هتكرر للأبد بدون توقف.
+أما alternate فمعناها إن الحركة هتمشي للأمام وبعدين ترجع بالعكس بدل ما تعيد من البداية فجأة.
+
+📌 مثال عملي: 
+   لو الإضاءة بتبدأ خافتة وتبقى قوية:
+
+مع alternate: هتبدأ تخفت تاني تدريجي لحد ما ترجع زي الأول، وبعدين تعيد.
+
+بدون alternate: بعد ما توصل للقوة القصوى، هتطفي فجأة وتبدأ من أول.
+
+يعني infinite alternate = تكرار أبدي + رجوع تدريجي للخلف بدل القفز للنقطة الأولى. */
+}
+
+/* حركة إضاءة العنوان */
+@keyframes glowTitle {
+  from {
+    text-shadow: 0 0 10px #ff3d00, 0 0 20px #ff3d00, 0 0 40px #ff3d00;
+  }
+  to {
+    text-shadow: 0 0 20px #ff5722, 0 0 40px #ff5722, 0 0 60px #ff3d00;
+  }
+}
+
+.discount .content h3 {
+  font-size: 40px; /* حجم عنوان كبير */
+  letter-spacing: -2px; /* تقليل المسافة بين الحروف */
+}
+
+
+.discount .content p {
+  line-height: 1.6; /* ارتفاع السطر */
+  font-size: 18px; /* حجم النص */
+  max-width: 500px; /* أقصى عرض للنص */
+}
+
+.discount .content img {
+  width: 300px; /* عرض الصورة */
+  max-width: 100%; /* منع تجاوز حجم الشاشة */
+}
+
+/* ====================================== */
+/*  End Discount Section */
+/* ======================================= */
+
+/* ========================================== */
+/* Start Footer */
+/* =========================================== */
+.footer {
+  background-color: #191919; /* لون خلفية داكن للفوتر */
+  padding: 70px 0 0; /* مسافة داخلية أعلى وأسفل */
+}
+
+/* عند الشاشات الصغيرة يتم توسيط النص */
+@media (max-width: 767px) {
+  .footer {
+    text-align: center;
+  }
+}
+
+.footer .container {
+  /* تقسيم الفوتر إلى أعمدة متجاوبة */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 40px; /* مسافة بين الأعمدة */
+}
+
+.footer .box h3 {
+   color: #ff3d00;
+  font-size: 50px;
+  margin: 0 0 20px;
+  text-shadow: 0 0 15px #ff3d00;
+}
+
+.footer .box .social {
+  display: flex; /* ترتيب الأيقونات أفقياً */
+}
+
+/* في الشاشات الصغيرة يتم توسيط الأيقونات */
+@media (max-width: 767px) {
+  .footer .box .social {
+    justify-content: center;
+  }
+}
+
+.footer .box .social li {
+  margin-right: 10px; /* مسافة بين الأيقونات */
+}
+
+.footer .box .social li a {
+  
+   background-color: transparent;/* لون خلفية للأيقونة */
+  display: inline-flex; /* محاذاة المحتوى داخل الأيقونة */
+  justify-content: center;
+  align-items: center;
+  width: 50px; /* حجم الأيقونة */
+  height: 50px;
+  font-size: 20px;
+  transition: var(--main-transition); /* تأثير حركة ناعم */
+
+  border: 2px solid #ff3d00;
+  color: #ff3d00;
+  box-shadow: 0 0 10px #ff3d00;
+
+}
+
+/* تغيير لون الخلفية عند المرور على كل أيقونة */
+/* .footer .box .social .facebook:hover {
+  background-color: #1877f2;
+}
+.footer .box .social .twitter:hover {
+  background-color: #1da1f2;
+}
+.footer .box .social .youtube:hover {
+  background-color: #ff0000;
+} */
+
+.footer .box .text {
+  line-height: 2; /* زيادة تباعد الأسطر */
+  color: #b9b9b9; /* لون النص */
+}
+
+.footer .box .links li {
+  padding: 15px 0; /* مسافة رأسية */
+  transition: var(--main-transition);
+}
+
+/* إضافة خط فاصل بين الروابط */
+.footer .box .links li:not(:last-child) {
+  border-bottom: 1px solid #444;
+}
+
+/* تحريك الرابط لليسار عند المرور */
+.footer .box .links li:hover {
+  padding-left: 10px;
+}
+
+.footer .box .links li:hover a {
+  color: white; /* تغيير اللون عند المرور */
+}
+
+.footer .box .links li a {
+  color: #b9b9b9;
+  transition: var(--main-transition);
+}
+
+/* إضافة أيقونة سهم قبل الروابط */
+.footer .box .links li a::before {
+  font-family: "Font Awesome 5 Free";
+  content: "\F101"; /* ايقونه سهم*/
+  font-weight: 900;
+  margin-right: 10px;
+  color: var(--main-color);
+}
+
+.footer .box .line {
+  display: flex;
+  align-items: center;
+  color: #b9b9b9;
+  margin-bottom: 30px;
+}
+
+/* في الشاشات الصغيرة يتم عرض الخطوط عمودياً */
+@media (max-width: 767px) {
+  .footer .box .line {
+    flex-direction: column;
+  }
+}
+
+.footer .box .line i {
+  font-size: 25px; /* حجم أيقونة */
+  color: var(--main-color);
+  margin-right: 10px;
+}
+
+/* في الشاشات الصغيرة يتم ضبط المسافات للأيقونات */
+@media (max-width: 767px) {
+  .footer .box .line i {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+}
+
+.footer .box .line .info {
+  line-height: 1.7; /* تباعد الأسطر */
+  flex: 1;
+}
+
+.footer .box .line .info span {
+  display: block; /* كل معلومة في سطر منفصل */
+}
+
+.footer .footer-gallery img {
+  width: 78px; /* حجم الصور */
+  border: 3px solid #ff3d00; /* إطار أبيض للصورة */
+  margin: 2px; /* مسافة بين الصور */
+}
+
+.footer .copyright {
+  padding: 25px 0;
+  text-align: center;
+  color: white;
+  margin: 50px 0 0;
+  border-top: 1px solid #ff3d00;; /* خط علوي */
+  text-shadow: 0 0 10px #ff3d00;
+
+}
+/* ================================== */
+/* End Footer */
+/* ================================== */
